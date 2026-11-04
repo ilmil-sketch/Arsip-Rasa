@@ -1,0 +1,1376 @@
+:root {
+  --bg-deep: #08080a;
+  --bg-surface: #101014;
+  --bg-card: #15151b;
+  --text-main: #dcdce0;
+  --text-muted: #737380;
+  --accent: #ececf1;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-focus: rgba(255, 255, 255, 0.22);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-deep);
+  /* Perpaduan 3 lapis: 
+     1. Lapisan noise berbutir (film grain / kertas sketsa) 
+     2. Sorotan cahaya halus di tengah 
+     3. Bayangan pekat di sudut (vignette) */
+  background-image: 
+    radial-gradient(circle at 50% 20%, rgba(35, 35, 45, 0.45) 0%, rgba(8, 8, 10, 0.95) 75%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+  background-attachment: fixed;
+  color: var(--text-main);
+  font-family: 'Newsreader', serif;
+  line-height: 1.85;
+  letter-spacing: 0.02em;
+  overflow-x: hidden;
+}
+
+/* Navigasi Bar */
+.nav-bar {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(16, 16, 20, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  padding: 8px 24px;
+  border-radius: 30px;
+  display: flex;
+  gap: 20px;
+  z-index: 1000;
+}
+
+.nav-bar a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.nav-bar a:hover {
+  color: var(--accent);
+}
+
+/* Layout Umum */
+.container {
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 120px 0;
+  text-align: center;
+}
+
+/* 1. Hero / Prolog */
+.hero-tag {
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.35em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 2.5rem;
+}
+
+.prolog-text {
+  font-size: 1.65rem;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--accent);
+  max-width: 720px;
+}
+
+.scroll-down {
+  margin-top: 4rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  animation: float 2.5s infinite ease-in-out;
+}
+
+/* 2. Monolog Batin */
+.monologue-wrap {
+  max-width: 660px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  font-size: 1.25rem;
+  color: #b0b0b8;
+}
+
+.epigraph {
+  margin-top: 1rem;
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+/* Section Title */
+.section-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.25rem;
+  letter-spacing: 0.25em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 3.5rem;
+}
+
+/* 3. Ruang Widya (Education Grid) */
+.widya-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  width: 100%;
+  text-align: left;
+}
+
+.col-heading {
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+}
+
+.widya-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 22px;
+  margin-bottom: 16px;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.widya-card:hover {
+  border-color: var(--border-focus);
+  transform: translateY(-2px);
+}
+
+.widya-badge {
+  display: inline-block;
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: #9ca3af;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.widya-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.05rem;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.widya-sub {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 12px;
+}
+
+.widya-desc {
+  font-size: 0.95rem;
+  color: #a1a1aa;
+  line-height: 1.7;
+}
+
+/* 4. Ruang Auditif (Two Column Spotify Card Section) */
+.auditif-container {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 36px;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+}
+
+.auditif-narrative {
+  padding-right: 16px;
+}
+
+.auditif-tag {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.auditif-heading {
+  font-family: 'Cinzel', serif;
+  font-size: 2.2rem;
+  line-height: 1.25;
+  color: var(--accent);
+  margin-bottom: 24px;
+}
+
+.auditif-quote {
+  font-size: 1.15rem;
+  font-style: italic;
+  color: #b0b0b8;
+  line-height: 1.8;
+  margin-bottom: 28px;
+}
+
+.auditif-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #52525b;
+  transition: background 0.3s;
+}
+
+.status-dot.active {
+  background: #1db954;
+  box-shadow: 0 0 10px rgba(29, 185, 84, 0.5);
+}
+
+/* Spotify Card Styling */
+.spotify-card {
+  background: #121216;
+  border: 1px solid var(--border-focus);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8);
+}
+
+.card-main-player {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.card-cover-wrap {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #1f1f24;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+}
+
+.card-cover-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-track-info {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.card-track-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.15rem;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+}
+
+.card-track-artist {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.spotify-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  color: #9ca3af;
+}
+
+/* Timeline & Progress */
+.card-timeline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.progress-bar-container {
+  flex-grow: 1;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.1s linear;
+}
+
+/* Controls */
+.card-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.ctrl-icon-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.ctrl-icon-btn:hover {
+  transform: scale(1.15);
+  color: #a1a1aa;
+}
+
+.ctrl-icon-btn.main-play {
+  font-size: 1.6rem;
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border: 1px solid var(--border-focus);
+}
+
+.ctrl-icon-btn.main-play:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+/* Queue List */
+.card-queue-list {
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.card-queue-list::-webkit-scrollbar {
+  width: 4px;
+}
+.card-queue-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+}
+
+.queue-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 0.85rem;
+}
+
+.queue-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.queue-item.active {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.queue-item-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.queue-num {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  width: 16px;
+}
+
+.queue-title {
+  color: #d4d4d8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.queue-item.active .queue-title {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* 5. Galeri Sketsa */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.gallery-card {
+  position: relative;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  cursor: pointer;
+  transition: border-color 0.4s ease, transform 0.4s ease;
+}
+
+.gallery-card:hover {
+  border-color: var(--border-focus);
+  transform: translateY(-4px);
+}
+
+.gallery-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(85%) contrast(1.05);
+  transition: filter 0.5s ease, transform 0.6s ease;
+}
+
+.gallery-card:hover img {
+  filter: grayscale(0%) contrast(1.1);
+  transform: scale(1.03);
+}
+
+.card-meta {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(8, 8, 10, 0.9) 0%, transparent 60%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+  text-align: left;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gallery-card:hover .card-meta {
+  opacity: 1;
+}
+
+.meta-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.meta-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* 6. Lembaran Aksara */
+.poetry-section {
+  width: 100%;
+}
+
+.poetry-accordion {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+
+.poetry-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+
+.poetry-item:hover {
+  border-color: var(--border-focus);
+}
+
+.poetry-header {
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.poetry-name {
+  font-family: 'Cinzel', serif;
+  font-size: 1.05rem;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+
+.poetry-date {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.poetry-body {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 24px;
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.5s ease;
+  background: #0c0c0f;
+}
+
+.poetry-body.open {
+  max-height: 2500px;
+  padding: 24px 28px 36px;
+  border-top: 1px solid var(--border);
+}
+
+.stanza {
+  font-size: 1.05rem;
+  color: #c4c4cc;
+  line-height: 1.9;
+  white-space: pre-line;
+  margin-bottom: 1.5rem;
+}
+
+.glossary {
+  margin-top: 1.5rem;
+  padding-top: 1.2rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.glossary-title {
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+  color: #9ca3af;
+}
+
+/* 7. Portal Kontak */
+.portal-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  padding: 48px 36px;
+  border-radius: 8px;
+  max-width: 360px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 60px;
+}
+
+.avatar-wrap {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid var(--border-focus);
+  margin-bottom: 1.5rem;
+  background: #18181b;
+}
+
+.avatar-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portal-name {
+  font-family: 'Cinzel', serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.portal-sub {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+.qr-container {
+  width: 170px;
+  height: 170px;
+  background: #fff;
+  padding: 8px;
+  border-radius: 6px;
+  margin-bottom: 2rem;
+}
+
+.qr-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.portal-btn {
+  display: inline-block;
+  padding: 10px 28px;
+  border: 1px solid var(--border-focus);
+  color: var(--accent);
+  text-decoration: none;
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  border-radius: 30px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.portal-btn:hover {
+  background: var(--accent);
+  color: var(--bg-deep);
+}
+
+/* Lightbox Modal */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(8px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  z-index: 2000;
+}
+
+.lightbox.active {
+  display: flex;
+}
+
+.lightbox-content {
+  max-width: 550px;
+  width: 100%;
+  text-align: center;
+}
+
+.lightbox-img {
+  max-width: 100%;
+  max-height: 70vh;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border);
+}
+
+.lightbox-caption {
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 1.2rem;
+}
+
+.lightbox-link {
+  color: var(--accent);
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  border-bottom: 1px solid var(--border-focus);
+  padding-bottom: 2px;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+/* Efek kilau redup pada kartu saat berada di ruang gelap */
+.widya-card, .spotify-card, .portal-card, .gallery-card {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 1px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+}
+
+@media (max-width: 768px) {
+  .widya-grid { grid-template-columns: 1fr; }
+  .auditif-container { grid-template-columns: 1fr; }
+  .auditif-heading { font-size: 1.8rem; }
+  .prolog-text { font-size: 1.35rem; }
+  .monologue-wrap { font-size: 1.1rem; }
+  .nav-bar { width: 90%; justify-content: space-around; padding: 8px 12px; gap: 8px; }
+}
+
+/* Kanvas Latar Belakang Interaktif */
+#matrix-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;          /* Di belakang semua konten */
+  pointer-events: none; /* Klik tembus ke teks & tombol di depannya */
+  opacity: 0.85;
+}
+
+/* ==========================================================
+   EFEK CAHAYA KELILING & ANIMASI PEMBUKA (NOIR PRESENCE)
+   ========================================================== */
+
+/* 1. Efek Pendar Garis Berputar Mengitari Tepi Kartu */
+.widya-card, .spotify-card, .portal-card, .gallery-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.widya-card::before, 
+.spotify-card::before, 
+.portal-card::before, 
+.gallery-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    transparent, 
+    transparent, 
+    transparent, 
+    rgba(255, 255, 255, 0.2), 
+    rgba(255, 255, 255, 0.5), 
+    transparent
+  );
+  animation: rotateBorder 6s linear infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.widya-card::after, 
+.spotify-card::after, 
+.portal-card::after, 
+.gallery-card::after {
+  content: '';
+  position: absolute;
+  inset: 1px; /* Ketebalan garis tepi bercahaya */
+  background: var(--bg-surface);
+  border-radius: inherit;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Pastikan semua tulisan dan tombol tetap di atas cahaya */
+.widya-card > *, 
+.spotify-card > *, 
+.portal-card > *, 
+.gallery-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes rotateBorder {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 2. Efek Pembuka Tabir Kabut Hening (Landing Presence) */
+#prolog {
+  animation: unveilPresence 2.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.hero-tag {
+  animation: floatBadge 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes unveilPresence {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.97);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes floatBadge {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-6px);
+  }
+}
+
+/* ==========================================================
+   EFEK ID CARD DIJATUHKAN (DROP & SWING HERO LANYARD)
+   ========================================================== */
+.hero-id-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  /* Animasi jatuh berayun dari atas */
+  animation: dropAndSwing 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  transform-origin: top center;
+}
+
+.lanyard-rope {
+  width: 2px;
+  height: 50px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.35));
+}
+
+.hero-id-card {
+  width: 200px;
+  background: rgba(18, 18, 22, 0.95);
+  border: 1px solid var(--border-focus);
+  border-radius: 10px;
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.75), 0 0 1px rgba(255, 255, 255, 0.2);
+  position: relative;
+}
+
+.id-card-clip {
+  width: 30px;
+  height: 5px;
+  background: #3f3f46;
+  border-radius: 3px;
+  margin-bottom: 12px;
+}
+
+.id-avatar-box {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid var(--border-focus);
+  margin-bottom: 10px;
+}
+
+.id-avatar-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.id-role {
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.id-name {
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  color: var(--accent);
+  margin: 2px 0;
+}
+
+.id-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 12px;
+}
+
+.id-ig-btn {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  color: #08080a;
+  background: var(--accent);
+  padding: 5px 16px;
+  border-radius: 20px;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.id-ig-btn:hover {
+  transform: scale(1.05);
+  background: #ffffff;
+}
+
+/* Keyframe Jatuh & Berayun */
+@keyframes dropAndSwing {
+  0% {
+    opacity: 0;
+    transform: translateY(-90px) rotate(-12deg);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(0) rotate(6deg);
+  }
+  80% {
+    transform: rotate(-3deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+/* ==========================================================
+   PORTAL GITHUB REPOSITORY STYLING
+   ========================================================== */
+.github-portal {
+  max-width: 420px;
+}
+
+.github-badge-top {
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.github-manifesto {
+  font-size: 0.88rem;
+  font-style: italic;
+  color: #a1a1aa;
+  margin: 12px 0 18px;
+  line-height: 1.6;
+}
+
+.repo-tags-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 22px;
+}
+
+.repo-tag {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+
+.github-btn {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* ==========================================================
+   LAYOUT HERO DUA KOLOM & ANIMASI KARTU JATUH BERAYUN
+   ========================================================== */
+.hero-section {
+  padding-top: 100px;
+}
+
+.hero-split-container {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  align-items: center;
+  gap: 48px;
+  width: 100%;
+  perspective: 1200px; /* Memberi efek kedalaman ruang 3D saat kartu berayun */
+}
+
+/* Sisi Kiri: Teks Rata Kiri */
+.hero-text-left {
+  text-align: left;
+}
+
+.hero-text-left .hero-tag {
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+.hero-text-left .prolog-text {
+  text-align: left;
+  font-size: 1.65rem;
+  line-height: 1.65;
+  margin-bottom: 2rem;
+}
+
+.hero-text-left .scroll-down {
+  text-align: left;
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+
+/* Sisi Kanan: Kartu Gantung Diperbesar & Animasi Ayun Memutar */
+.hero-card-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-origin: top center;
+  /* Animasi: Jatuh -> Berayun ke kiri & kanan -> Sedikit rotasi miring */
+  animation: dropSwingSway 3s cubic-bezier(0.25, 1, 0.5, 1) forwards,
+             floatingWind 6s ease-in-out infinite 3.2s;
+}
+
+.lanyard-rope {
+  width: 3px;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.4));
+}
+
+.hero-id-card {
+  width: 250px; /* Ukuran diperbesar */
+  background: rgba(18, 18, 22, 0.95);
+  border: 1px solid var(--border-focus);
+  border-radius: 14px;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.85), 0 0 1px rgba(255, 255, 255, 0.2);
+  transform-style: preserve-3d;
+}
+
+.id-card-clip {
+  width: 36px;
+  height: 6px;
+  background: #3f3f46;
+  border-radius: 3px;
+  margin-bottom: 16px;
+}
+
+.id-avatar-box {
+  width: 95px; /* Avatar diperbesar */
+  height: 95px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid var(--border-focus);
+  margin-bottom: 14px;
+}
+
+.id-avatar-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.id-role {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.id-name {
+  font-family: 'Cinzel', serif;
+  font-size: 1.15rem;
+  color: var(--accent);
+  margin: 4px 0;
+}
+
+.id-sub {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 18px;
+}
+
+.id-ig-btn {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  color: #08080a;
+  background: var(--accent);
+  padding: 8px 22px;
+  border-radius: 20px;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.id-ig-btn:hover {
+  transform: scale(1.06);
+  background: #ffffff;
+}
+
+/* Keyframes: Efek Jatuh dari Atas, Berayun Kiri-Kanan, & Berputar Halus */
+@keyframes dropSwingSway {
+  0% {
+    opacity: 0;
+    transform: translateY(-220px) rotateZ(-24deg) rotateY(25deg);
+  }
+  35% {
+    opacity: 1;
+    transform: translateY(0px) rotateZ(18deg) rotateY(-18deg);
+  }
+  55% {
+    transform: translateY(-8px) rotateZ(-12deg) rotateY(10deg);
+  }
+  75% {
+    transform: translateY(0px) rotateZ(6deg) rotateY(-6deg);
+  }
+  90% {
+    transform: translateY(-2px) rotateZ(-2deg) rotateY(2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px) rotateZ(0deg) rotateY(0deg);
+  }
+}
+
+/* Ayunan lambat setelah berhenti jatuh */
+@keyframes floatingWind {
+  0%, 100% {
+    transform: translateY(0) rotateZ(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: translateY(-4px) rotateZ(1.8deg) rotateY(-3deg);
+  }
+}
+
+/* ==========================================================
+   PORTAL GITHUB MAHASISWA YUDHARTA
+   ========================================================== */
+.github-simple-desc {
+  font-size: 0.95rem;
+  color: #a1a1aa;
+  font-style: italic;
+  margin: 8px 0 24px;
+}
+
+/* Responsif Layar HP */
+@media (max-width: 768px) {
+  .hero-split-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .hero-text-left, .hero-text-left .hero-tag, .hero-text-left .prolog-text, .hero-text-left .scroll-down {
+    text-align: center;
+  }
+  .hero-card-right {
+    margin-top: 2rem;
+  }
+}
+
+/* ==========================================================
+   EFEK UNGU MISTIS KETIKA KURSOR MELINTAS (PURPLE HOVER)
+   ========================================================== */
+/* Warna teks utama saat disentuh kursor */
+.prolog-text:hover,
+.monologue-wrap p:hover,
+.stanza:hover,
+.widya-title:hover,
+.poetry-name:hover,
+.auditif-heading:hover,
+.auditif-quote:hover {
+  color: #c4b5fd !important; /* Ungu lavender lembut */
+  text-shadow: 0 0 12px rgba(168, 146, 255, 0.4);
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Warna seleksi teks saat diblok mouse */
+::selection {
+  background: rgba(147, 51, 234, 0.35);
+  color: #f3e8ff;
+}
+
+/* ==========================================================
+   KARTU EPIGRAPH MONOLOG GANTUNG & BERAYUN
+   ========================================================== */
+.monolog-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2.5rem;
+  transform-origin: top center;
+  animation: monologCardSway 5s ease-in-out infinite alternate;
+}
+
+.lanyard-rope-short {
+  width: 2px;
+  height: 35px;
+  background: linear-gradient(to bottom, transparent, rgba(196, 181, 253, 0.4));
+}
+
+.monolog-hanging-card {
+  background: rgba(18, 16, 26, 0.9);
+  border: 1px solid rgba(168, 146, 255, 0.25);
+  padding: 16px 28px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 15px rgba(147, 51, 234, 0.15);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+}
+
+.monolog-hanging-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: rgba(168, 146, 255, 0.6);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(168, 146, 255, 0.3);
+}
+
+.card-whisper-tag {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: #a78bfa;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.monolog-epigraph-text {
+  font-family: 'Newsreader', serif;
+  font-size: 1.15rem;
+  font-style: italic;
+  color: #e9d5ff;
+  letter-spacing: 0.04em;
+}
+
+/* Ayunan lembut kiri-kanan */
+@keyframes monologCardSway {
+  0% {
+    transform: rotate(-3.5deg);
+  }
+  100% {
+    transform: rotate(3.5deg);
+  }
+}
+
+/* ==========================================================
+   EFEK AYUN KANAN-KIRI PADA TEKS MONOLOG
+   ========================================================== */
+.swaying-text {
+  display: inline-block;
+  transform-origin: top right;
+  animation: textSway 4s ease-in-out infinite alternate;
+}
+
+@keyframes textSway {
+  0% {
+    transform: rotate(-3deg) translateY(0);
+  }
+  100% {
+    transform: rotate(3deg) translateY(-2px);
+  }
+}
+
+/* ==========================================================
+   EFEK SENTER UNGU LINGKARAN KECIL (SPOTLIGHT GLOW)
+   ========================================================== */
+.purple-spotlight {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 140px;  /* Ukuran diameter lingkaran kecil */
+  height: 140px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(196, 181, 253, 0.45) 0%,
+    rgba(168, 146, 255, 0.25) 45%,
+    transparent 75%
+  );
+  mix-blend-mode: screen; /* Menerangi teks dan isi kartu dengan warna ungu */
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+/* ==========================================================
+   PERBAIKAN OVERLAY DESKRIPSI FRAGMEN GORESAN (HOVER FIX)
+   ========================================================== */
+.gallery-card .card-meta {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(8, 8, 10, 0.95) 0%, rgba(8, 8, 10, 0.4) 60%, transparent 100%) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;
+  padding: 20px !important;
+  text-align: left !important;
+  opacity: 0 !important;
+  z-index: 10 !important; /* Memastikan naik ke atas lapisan border beam */
+  transition: opacity 0.35s ease, transform 0.35s ease !important;
+  pointer-events: none;
+}
+
+/* Saat disentuh kursor: Lapisan gelap dan tulisan deskripsi langsung muncul */
+.gallery-card:hover .card-meta {
+  opacity: 1 !important;
+}
+
+.gallery-card .card-meta .meta-title {
+  color: #f3f3f7 !important;
+  font-family: 'Cinzel', serif !important;
+  font-size: 1rem !important;
+  margin-bottom: 4px !important;
+  transform: translateY(6px);
+  transition: transform 0.35s ease;
+}
+
+.gallery-card .card-meta .meta-desc {
+  color: #a1a1aa !important;
+  font-size: 0.82rem !important;
+  font-style: italic !important;
+  transform: translateY(6px);
+  transition: transform 0.35s ease;
+}
+
+.gallery-card:hover .card-meta .meta-title,
+.gallery-card:hover .card-meta .meta-desc {
+  transform: translateY(0);
+}
